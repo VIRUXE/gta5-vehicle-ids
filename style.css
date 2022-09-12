@@ -1,0 +1,60 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+a {
+    color: #84a9cc;
+    text-decoration: none;
+}
+
+a:hover {
+    color: black;
+}
+
+#vehicles tr, a {
+    transition: all 0.2s ease-in-out;
+}
+
+#query {
+    background-image: url('https://www.w3schools.com/css/searchicon.png'); /* I like this icon - so what */
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: .5rem;
+}
+
+#vehicles {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    font-size: 18px;
+}
+
+#vehicles th,
+#vehicles td {
+    text-align: left;
+    padding: 12px;
+}
+
+#vehicles tr {
+    border-bottom: 1px solid #ddd;
+}
+
+#vehicles th,
+#vehicles tr:hover {
+    background-color: #f1f1f1;
+}
+
+td:first-child {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: small;
+    background-color: #f1f1f1;
+}
+
+td:nth-child(2),
+td:nth-child(3) {
+    text-transform: capitalize;
+}
