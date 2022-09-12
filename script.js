@@ -9,7 +9,7 @@ fetch("vehicles.json")
 		var newRow = document.createElement('tr');
 	
 		newRow.innerHTML = 
-			'<td ondoubleclick="copyToClipboard(this)" title="Double-click to Copy to Clipboard">' + vehicle.id + '</td>' +
+			'<td ondblclick="copyToClipboard(this)" title="Double-click to Copy to Clipboard">' + vehicle.id + '</td>' +
 			'<td>' + vehicle.name + '</td>' +
 			'<td>' + vehicle.category + '</td>' +
 			'<td>' + vehicle.dlc + '</td>';
