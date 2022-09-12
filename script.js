@@ -2,20 +2,23 @@ const vehiclesTable = document.getElementById("vehicles");
 const tableRows = vehiclesTable.rows;
 
 // Populate the table with vehicles first
-fetch("vehicles.json")
-  .then(response => response.json())
-  .then(data => 
-	data.forEach(function(vehicle) {
-		var newRow = document.createElement('tr');
-	
-		newRow.innerHTML = 
-			'<td ondblclick="copyToClipboard(this)" title="Double-click to Copy to Clipboard">' + vehicle.id + '</td>' +
-			'<td>' + vehicle.name + '</td>' +
-			'<td>' + vehicle.category + '</td>' +
-			'<td>' + vehicle.dlc + '</td>';
-	
-		vehiclesTable.appendChild(newRow);
-	})
+fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehicles.json")
+	.then(response => response.json())
+	.then(data => {
+		document.getElementById('totalVehicles').innerText = data.length + ' Total Vehicles';
+
+		data.forEach(function(vehicle) {
+			var newRow = document.createElement('tr');
+
+			newRow.innerHTML = 
+				'<td ondblclick="copyToClipboard(this)" title="Double-click to Copy to Clipboard">' + vehicle.id + '</td>' +
+				'<td>' + vehicle.name + '</td>' +
+				'<td>' + vehicle.category + '</td>' +
+				'<td>' + vehicle.dlc + '</td>';
+
+			vehiclesTable.appendChild(newRow);
+		})
+	}
 );
 
 // Set the color in the Category and DLC columns
