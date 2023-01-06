@@ -11,8 +11,8 @@ fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehic
 			var newRow = document.createElement('tr');
 
 			newRow.innerHTML = 
-				'<td ondblclick="copyToClipboard(this)" title="Double-click to Copy to Clipboard">' + vehicle.id + '</td>' +
-				'<td>' + vehicle.model + '</td>' +
+				'<td ondblclick="copyToClipboard(this)" title="Double-click to Copy to Clipboard">' + vehicle.model + '</td>' +
+				'<td>' + vehicle.name + '</td>' +
 				'<td>' + vehicle.class + '</td>' +
 				'<td>' + vehicle.dlc + '</td>';
 
