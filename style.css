@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;500&display=swap');
+
 body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 a {
@@ -23,6 +25,7 @@ a:hover {
     padding: 12px 20px 12px 40px;
     border: 1px solid #ddd;
     margin-bottom: .5rem;
+    margin-left: .5rem;
 }
 
 #vehicles {
@@ -32,10 +35,24 @@ a:hover {
     font-size: 18px;
 }
 
+#vehicles th {
+    font-weight: bolder;
+}
+
 #vehicles th,
 #vehicles td {
     text-align: left;
-    padding: 12px;
+    padding: 6px;
+}
+
+#vehicles td:nth-child(4) { /* Capitalize the first letter */
+    text-transform: capitalize;
+}
+#vehicles td:nth-child(5) span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #84a9cc;
+
 }
 
 #vehicles tr {
@@ -57,4 +74,20 @@ td:first-child {
 td:nth-child(2),
 td:nth-child(3) {
     text-transform: capitalize;
+}
+
+#vehicle-image {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    background-color: #84a9cc;
+    padding: .5rem;
+    border-radius: 5px;
+}
+
+#vehicle-image span {
+    font-weight: bold;
 }
