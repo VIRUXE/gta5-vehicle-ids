@@ -2,17 +2,14 @@ const vehiclesTable = document.getElementById("vehicles");
 const tableRows = vehiclesTable.rows;
 
 // Populate the table with vehicles first
-fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehicles.json", {cache: "no-cache"})
+fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehicles.json")
 	.then(response => response.json())
-	.then(data => {
-		document.getElementById('totalVehicles').innerText = data.length + ' Total Vehicles';
+	.then(vehicles => {
+		const vehicleModels = Object.keys(vehicles);
 
-		// Order data by model alphabetically. The JSON file sometimes has vehicles in a random order.
-		data.sort((a, b) => (a.model > b.model) ? 1 : -1);
-
-		data.forEach(function(vehicle) {
-			const vehicleModel    = vehicle.model;
-			const vehicleName     = vehicle.name || vehicleModel
+		vehicleModels.forEach(model => {
+			const vehicle         = vehicles[model];
+			const vehicleName     = vehicle.name || model
 			let   vehicleRealName = vehicle.realname || "";
 			const vehicleClass    = vehicle.class || "";
 			let   vehicleDLC      = vehicle.dlc || "";
@@ -86,61 +83,59 @@ fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehic
 
 			let newRow = document.createElement('tr');
 			newRow.innerHTML = `
-			<td ondblclick="copyToClipboard(this)" title="Double-click to Copy to Clipboard">${vehicleModel}</td>
-			<td><a href="https://gtacars.net/gta5/${vehicleModel}" target="_blank">${vehicleName}</a></td>
+			<td ondblclick="copyToClipboard(this)" title="Double-click to Copy to Clipboard">${model}</td>
+			<td><a href="https://gtacars.net/gta5/${model}" target="_blank">${vehicleName}</a></td>
 			<td>${vehicleRealName}</td>
 			<td>${vehicleClass}</td>
 			<td>${vehicleDLC}</td>
 			`;
 
 			vehiclesTable.appendChild(newRow);
-		})
+		});
 		
 		// On hovering the first td in the table, show an iframe using the href as the source
 		document.querySelectorAll("#vehicles tr td:first-child").forEach(function(td) {
 			td.addEventListener("mouseover", function() {
-				data.forEach(function(vehicle) {
-					if (vehicle.model === td.innerText.toLowerCase()) {
-						let markup = ``;
-						
-						// Create markup for each value in the vehicle object
-						let columns = 0;
-						for (const [key, value] of Object.entries(vehicle)) {
-							// Don't add values that are on the table
-							if (key === "model" || key === "name" || key === "realname" || key === "class" || key === "dlc") continue;
+				const vehicle = vehicles[td.innerText.toLowerCase()]; // Get the vehicle object from the vehicles object, using the model as the key
+				
+				let markup = ``;
+				
+				// Create markup for each value in the vehicle object
+				let columns = 0;
+				Object.keys(vehicle).forEach(function(key) {
+					// Don't add values that are on the table
+					if (key === "model" || key === "name" || key === "realname" || key === "class" || key === "dlc") return;
 
-							const property = key.charAt(0).toUpperCase() + key.slice(1);
-							
-							if (key === "price") {
-								markup += `<span>${property}</span>: $${value.toLocaleString()}<br>`;
-							} else if (key === "weight") {
-								markup += `<span>${property}</span>: ${value}KG<br>`;
-							} else if (key === "ranking") {
-								markup += `<span>${property}</span>: ${value}★<br>`;
-							} else {
-								markup += `<span>${property}</span>: ${value}<br>`;
-							}
-							// Capitalize the first letter of the property
-							columns++;
-						}
-						
-						// If there are no values, don't show the div
-						if (columns === 0) {
-							document.getElementById("vehicle-image").style.display = "none";
-							return;
-						}
-
-						const vehicleImage = document.getElementById("vehicle-image");
-
-						vehicleImage.innerHTML = markup;
-						vehicleImage.style.display = "block";
-		
-						// Now we move the div to where the mouse is
-						vehicleImage.style.left = event.pageX + 10 + "px";
-						vehicleImage.style.top = event.pageY + 10 + "px";
+					const property = key.charAt(0).toUpperCase() + key.slice(1);
+					const value = vehicle[key];
+					
+					if (key === "price") {
+						markup += `<span>${property}</span>: $${value.toLocaleString()}<br>`;
+					} else if (key === "weight") {
+						markup += `<span>${property}</span>: ${value}KG<br>`;
+					} else if (key === "ranking") {
+						markup += `<span>${property}</span>: ${value}★<br>`;
+					} else {
+						markup += `<span>${property}</span>: ${value}<br>`;
 					}
+					// Capitalize the first letter of the property
+					columns++;
 				});
+				
+				// If there are no values, don't show the div
+				if (columns === 0) {
+					document.getElementById("vehicle-image").style.display = "none";
+					return;
+				}
 
+				const vehicleImage = document.getElementById("vehicle-image");
+
+				vehicleImage.innerHTML = markup;
+				vehicleImage.style.display = "block";
+
+				// Now we move the div to where the mouse is
+				vehicleImage.style.left = event.pageX + 10 + "px";
+				vehicleImage.style.top = event.pageY + 10 + "px";
 			});
 
 			td.addEventListener("mouseout", function() {
