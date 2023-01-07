@@ -13,6 +13,15 @@ a:hover {
     color: black;
 }
 
+sup {
+    font-size: xx-small;
+    vertical-align: super;
+    padding: 0 .15rem;
+    background-color: #84a9cc;
+    color: white;
+    border-radius: 50%
+}
+
 #vehicles tr, a {
     transition: all 0.2s ease-in-out;
 }

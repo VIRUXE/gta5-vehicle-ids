@@ -22,8 +22,11 @@ fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehic
 				if (vehicle.realname.includes(',') || vehicle.realname.includes('/') || vehicle.realname.includes(';')) {
 					// Split the string by either a comma, a / or a ;
 					const realNames = vehicle.realname.split(/[,/;]/);
+					// Add the number of real names inside a sup tag
+					vehicleRealName = `<sup>${realNames.length}</sup> `;
+
 					// Make the font size smaller for each real name (besides the first one), using inline styles withing the span
-					vehicleRealName = realNames.map((realName, index) => {
+					vehicleRealName += realNames.map((realName, index) => {
 						if (index === 0) return realName;
 
 						const fontSize = 1.0 - (index * 0.1);
