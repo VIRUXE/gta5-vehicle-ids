@@ -115,6 +115,8 @@ fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehic
 						markup += `<span>${property}</span>: ${value}KG<br>`;
 					} else if (key === "ranking") {
 						markup += `<span>${property}</span>: ${value}★<br>`;
+					} else if (key === "image") {
+						markup += `<div><img src="http://gtabase.com${value}" alt="${vehicle}"></div>`;
 					} else {
 						markup += `<span>${property}</span>: ${value}<br>`;
 					}
@@ -124,22 +126,22 @@ fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehic
 				
 				// If there are no values, don't show the div
 				if (columns === 0) {
-					document.getElementById("vehicle-image").style.display = "none";
+					document.getElementById("vehicle-info").style.display = "none";
 					return;
 				}
 
-				const vehicleImage = document.getElementById("vehicle-image");
+				const vehicleInfo = document.getElementById("vehicle-info");
 
-				vehicleImage.innerHTML = markup;
-				vehicleImage.style.display = "block";
+				vehicleInfo.innerHTML = markup;
+				vehicleInfo.style.display = "block";
 
 				// Now we move the div to where the mouse is
-				vehicleImage.style.left = event.pageX + 10 + "px";
-				vehicleImage.style.top = event.pageY + 10 + "px";
+				vehicleInfo.style.left = event.pageX + 10 + "px";
+				vehicleInfo.style.top = event.pageY + 10 + "px";
 			});
 
 			td.addEventListener("mouseout", function() {
-				document.getElementById("vehicle-image").style.display = "none";
+				document.getElementById("vehicle-info").style.display = "none";
 			});
 		});
 	}
