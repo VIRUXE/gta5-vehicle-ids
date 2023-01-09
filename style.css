@@ -22,8 +22,10 @@ sup {
     border-radius: 50%
 }
 
-#vehicles tr, a {
-    transition: all 0.2s ease-in-out;
+#total-vehicles {
+    font-weight: bold;
+    font-size: .9em;
+    margin: .5rem 0 .1rem .5rem;
 }
 
 #query {
@@ -42,6 +44,10 @@ sup {
     width: 100%;
     border: 1px solid #ddd;
     font-size: 18px;
+}
+
+#vehicles tr, a {
+    transition: all 0.2s ease-in-out;
 }
 
 #vehicles th {
@@ -85,6 +91,13 @@ td:nth-child(3) {
     text-transform: capitalize;
 }
 
+td span.highlight {
+    font-weight: bold;
+    /* Invert colors */
+    background-color: #84a9cc;
+    color: white;
+}
+
 #vehicle-info {
     display: none;
     position: absolute;
@@ -104,7 +117,7 @@ td:nth-child(3) {
 #vehicle-info div { /* There's only one div inside so it's fine */
     height: 150px;
     width: 300px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 5px;
     margin-top: .5rem;
     /* Some type of placeholder image, while the actual image loads */

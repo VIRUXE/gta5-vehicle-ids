@@ -81,8 +81,8 @@ fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehic
 			}
 			
 
-			let newRow = document.createElement('tr');
-			newRow.innerHTML = `
+			let tableRow = document.createElement('tr');
+			tableRow.innerHTML = `
 			<td ondblclick="copyToClipboard(this)" title="Double-click to Copy to Clipboard">${model}</td>
 			<td><a href="https://gtacars.net/gta5/${model}" target="_blank">${vehicleName}</a></td>
 			<td>${vehicleRealName}</td>
@@ -90,8 +90,10 @@ fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehic
 			<td>${vehicleDLC}</td>
 			`;
 
-			vehiclesTable.appendChild(newRow);
+			vehiclesTable.appendChild(tableRow);
+			totalVehicles++;
 		});
+		document.getElementById('total-vehicles').innerText = `${totalVehicles} Vehicles`;
 		
 		// On hovering the first td in the table, show an iframe using the href as the source
 		document.querySelectorAll("#vehicles tr td:first-child").forEach(function(td) {
@@ -150,31 +152,35 @@ fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehic
 );
 
 // The actual search function
+let searchTimes = 0;
+let totalVehicles = 0;
 function search() {
+	totalVehicles = 0;
+	searchTimes++;
+
+	console.log(`Search #${searchTimes}`);
+
 	const query = document.getElementById("query").value.toLowerCase();
 
 	for (let row = 1; row < tableRows.length; row++) {
 		// Show or hide the row based on the query
-		tableRows[row].style.display = tableRows[row].innerText.toLowerCase().indexOf(query) > -1 ? "" : "none";
+		setTimeout(() => {
+			if (query === "" || tableRows[row].innerText.toLowerCase().indexOf(query) > -1) {
+				totalVehicles++;
+				tableRows[row].style.display = "";
+				document.getElementById("total-vehicles").innerText = `${totalVehicles} Vehicles`;
+			} else {
+				tableRows[row].style.display = "none";
+			}
+		}, 1);
 	}
+
+	// If there are no vehicles, show a message
+	if(totalVehicles === 0) document.getElementById("total-vehicles").innerText = `No vehicles match your search`;
 }
 
-// Delete the entire query value when Backspace is used
-document.getElementById("query").onkeydown = e => {
-	if (e.key === "Backspace")
-		document.getElementById("query").value = null;
-}
-// Clear the search when the user clicks on the search bar
-document.getElementById("query").onclick = () => {
-	document.getElementById("query").value = null;
-}
-
-// Show all the rows again when we click on the X button
-document.getElementById("query").onsearch = () => {
-	for (let row = 1; row < tableRows.length; row++) {
-		toggleRow(row, true);
-	}
-}
+// Search when the user presses Enter
+document.getElementById("query").onsearch = search;
 
 // Copy the ID to clipboard - Only works with https
 function copyToClipboard(element) {
