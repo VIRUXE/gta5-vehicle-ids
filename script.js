@@ -149,44 +149,13 @@ fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehic
 	}
 );
 
-function toggleRow(row, bool) {
-	// If the row is hidden, show it
-	if (bool) {
-		tableRows[row].style.display = "";
-		const interval = setInterval(() => {
-			let opacity = tableRows[row].style.opacity;
-			opacity = opacity === "" ? 0 : opacity;
-			opacity = parseFloat(opacity);
-			opacity += 0.1;
-			tableRows[row].style.opacity = opacity;
-			if (opacity >= 1) {
-				clearInterval(interval);
-			}
-		}, 80);
-	} else {
-		// Gradually lower the opacity of the row
-		let opacity = 1;
-		const interval = setInterval(() => {
-			opacity -= 0.1;
-			tableRows[row].style.opacity = opacity;
-			if (opacity <= 0) {
-				clearInterval(interval);
-
-				// Hide the row
-				tableRows[row].style.display = "none";
-				// tableRows[row].style.opacity = 1;
-			}
-		}, 80);
-	}
-}
-
 // The actual search function
 function search() {
 	const query = document.getElementById("query").value.toLowerCase();
 
 	for (let row = 1; row < tableRows.length; row++) {
 		// Show or hide the row based on the query
-		toggleRow(row, tableRows[row].innerText.toLowerCase().indexOf(query) > -1);
+		tableRows[row].style.display = tableRows[row].innerText.toLowerCase().indexOf(query) > -1 ? "" : "none";
 	}
 }
 
