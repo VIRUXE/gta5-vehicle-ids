@@ -96,7 +96,8 @@ fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehic
 		// On hovering the first td in the table, show an iframe using the href as the source
 		document.querySelectorAll("#vehicles tr td:first-child").forEach(function(td) {
 			td.addEventListener("mouseover", function() {
-				const vehicle = vehicles[td.innerText.toLowerCase()]; // Get the vehicle object from the vehicles object, using the model as the key
+				const vehicleName = td.innerText.toLowerCase();
+				const vehicle = vehicles[vehicleName]; // Get the vehicle object from the vehicles object, using the model as the key
 				
 				let markup = ``;
 				
@@ -116,7 +117,8 @@ fetch("https://raw.githubusercontent.com/VIRUXE/gta5-vehicle-metadata/main/vehic
 					} else if (key === "ranking") {
 						markup += `<span>${property}</span>: ${value}★<br>`;
 					} else if (key === "image") {
-						markup += `<div><img src="http://gtabase.com${value}" alt="${vehicle}"></div>`;
+						// Try to load the local image first and if that fails try to load the image from the url
+						markup += `<div><img src="images/${vehicleName}.jpg" onerror="this.onerror=null;this.src='https://gtabase.com${value}';" alt="${vehicleName}"></div>`;
 					} else {
 						markup += `<span>${property}</span>: ${value}<br>`;
 					}
