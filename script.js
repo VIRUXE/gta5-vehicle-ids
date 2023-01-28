@@ -172,7 +172,7 @@ function search() {
 			} else {
 				tableRows[row].style.display = "none";
 			}
-		}, 1);
+		});
 	}
 
 	// If there are no vehicles, show a message
